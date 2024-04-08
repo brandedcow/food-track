@@ -1,0 +1,71 @@
+{
+  cookies: RequestCookies {"next-auth.csrf-token":{"name":"next-auth.csrf-token","value":"1e858ba0bdc5045bea44cedbd4a408ce033dbcfdc2ebf2e3f788070a05afc5b9|1e68094af0a05732f13d7e61df5855788b7f14be109c68ed742c0ada016bd1a5"},"next-auth.callback-url":{"name":"next-auth.callback-url","value":"http://localhost:3000"},"authjs.csrf-token":{"name":"authjs.csrf-token","value":"58326f136b9110f3bc9ab6fda934229ff7e59758aced2142eecfece9f11f4bde|9cdca72156b5e410b5bd30887e2fe24a48d4bd779a4dcf3087bb55f0bd98127a"},"authjs.callback-url":{"name":"authjs.callback-url","value":"http://localhost:3000/auth/login"},"authjs.session-token":{"name":"authjs.session-token","value":"eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiWFZNU3haN3I4WlFBLVlvbFVLMzQwMGFpR05EUGdwOFg5YWNCb21UeUZpdzBGMHhnVnZhLTNKNU05S3N5U0lPdWsxRm5yXzZvN3pmaUZ5WGd2LTc4bncifQ..SbrgVSRFdotNJStWYEWG1A.f9BuTKx0QN6v42stlWKKXNCwo2fIy-jjTOzUVu-DAqbtftvXFPoNq_aGQ8rrOZgojYtTohxNp_DVLA2UvKo0yy27mHj8V9j_dzM9x73-g71xzMIcosSSG_BSn3KMakbZYCJl8PSJxHbB6t0UVx49DKP33FdiNEHVvFPl9i2schOqlXDfZjPTOsO4UNGQbGJES6Htnfg68hBSm6SjXrp16X6ZoT38qls645wBCEbD4IDT5yO0cGs-DDYmQy4rI0VKWTFmiVaa1JQoDCidVA2ctWbok1o7758xyyYKRqfeZ7MNxg6K75ydbp2r0f3MYnfdAyoYinc5oIkaBOtv6YJ5xg.P0ZinqVQMN7Zngmpho9G0JpUTL71uIRctK-CTDet6go"}},
+  geo: {},
+  ip: undefined,
+  nextUrl: {
+  href: 'http://localhost:3000/auth/login',
+  origin: 'http://localhost:3000',
+  protocol: 'http:',
+  username: '',
+  password: '',
+  host: 'localhost:3000',
+  hostname: 'localhost',
+  port: '3000',
+  pathname: '/auth/login',
+  search: '',
+  searchParams: URLSearchParams {  },
+  hash: ''
+},
+  url: 'http://localhost:3000/auth/login',
+  bodyUsed: false,
+  cache: 'default',
+  credentials: 'same-origin',
+  destination: '',
+  headers: {
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+  accept-encoding: 'gzip, deflate, br, zstd',
+  accept-language: 'en-US,en',
+  cache-control: 'max-age=0',
+  connection: 'keep-alive',
+  cookie: 'next-auth.csrf-token=1e858ba0bdc5045bea44cedbd4a408ce033dbcfdc2ebf2e3f788070a05afc5b9%7C1e68094af0a05732f13d7e61df5855788b7f14be109c68ed742c0ada016bd1a5; next-auth.callback-url=http%3A%2F%2Flocalhost%3A3000; authjs.csrf-token=58326f136b9110f3bc9ab6fda934229ff7e59758aced2142eecfece9f11f4bde%7C9cdca72156b5e410b5bd30887e2fe24a48d4bd779a4dcf3087bb55f0bd98127a; authjs.callback-url=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Flogin; authjs.session-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiWFZNU3haN3I4WlFBLVlvbFVLMzQwMGFpR05EUGdwOFg5YWNCb21UeUZpdzBGMHhnVnZhLTNKNU05S3N5U0lPdWsxRm5yXzZvN3pmaUZ5WGd2LTc4bncifQ..SbrgVSRFdotNJStWYEWG1A.f9BuTKx0QN6v42stlWKKXNCwo2fIy-jjTOzUVu-DAqbtftvXFPoNq_aGQ8rrOZgojYtTohxNp_DVLA2UvKo0yy27mHj8V9j_dzM9x73-g71xzMIcosSSG_BSn3KMakbZYCJl8PSJxHbB6t0UVx49DKP33FdiNEHVvFPl9i2schOqlXDfZjPTOsO4UNGQbGJES6Htnfg68hBSm6SjXrp16X6ZoT38qls645wBCEbD4IDT5yO0cGs-DDYmQy4rI0VKWTFmiVaa1JQoDCidVA2ctWbok1o7758xyyYKRqfeZ7MNxg6K75ydbp2r0f3MYnfdAyoYinc5oIkaBOtv6YJ5xg.P0ZinqVQMN7Zngmpho9G0JpUTL71uIRctK-CTDet6go',
+  host: 'localhost:3000',
+  referer: 'http://localhost:3000/auth/login',
+  sec-ch-ua: '"Brave";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+  sec-ch-ua-mobile: '?0',
+  sec-ch-ua-platform: '"macOS"',
+  sec-fetch-dest: 'document',
+  sec-fetch-mode: 'navigate',
+  sec-fetch-site: 'same-origin',
+  sec-fetch-user: '?1',
+  sec-gpc: '1',
+  upgrade-insecure-requests: '1',
+  user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+  x-forwarded-for: '::1',
+  x-forwarded-host: 'localhost:3000',
+  x-forwarded-port: '3000',
+  x-forwarded-proto: 'http'
+},
+  integrity: '',
+  keepalive: false,
+  method: 'GET',
+  mode: 'cors',
+  redirect: 'follow',
+  referrer: 'about:client',
+  referrerPolicy: '',
+  signal: AbortSignal {
+  [Symbol(kEvents)]: SafeMap(0) {},
+  [Symbol(events.maxEventTargetListeners)]: 10,
+  [Symbol(events.maxEventTargetListenersWarned)]: false,
+  [Symbol(kHandlers)]: SafeMap(0) {},
+  [Symbol(kAborted)]: false,
+  [Symbol(kReason)]: undefined,
+  [Symbol(kOnabort)]: undefined,
+  [Symbol(realm)]: {
+  settingsObject: {
+  baseUrl: undefined,
+  origin: [Getter],
+  policyContainer: { referrerPolicy: 'strict-origin-when-cross-origin' }
+}
+}
+}
+}
