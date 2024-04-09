@@ -14,7 +14,6 @@ const apiPrefix = "/api";
  * 3. Check for Private route
  */
 export default auth((req) => {
-  console.log(req.auth?.user);
   const isLoggedIn = !!req.auth;
 
   const { nextUrl } = req;

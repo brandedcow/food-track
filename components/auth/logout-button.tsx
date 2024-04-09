@@ -4,5 +4,9 @@ import { signOut } from "next-auth/react";
 import { Button } from "../ui/button";
 
 export const LogoutButton = () => {
-  return <Button onClick={() => signOut()}>Log Out</Button>;
+  const handleClick = () => {
+    signOut();
+  };
+
+  return <Button onClick={handleClick}>Log Out</Button>;
 };

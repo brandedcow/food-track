@@ -1,9 +1,5 @@
-import { LogoutButton } from "@/components/auth/logout-button";
+import React from "react";
 
 export default function DashboardPage() {
-  return (
-    <div className="flex h-screen justify-center items-center">
-      <LogoutButton />
-    </div>
-  );
+  return <div className="flex flex-1 justify-center items-center">Dash</div>;
 }
