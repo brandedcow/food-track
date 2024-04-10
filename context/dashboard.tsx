@@ -1,20 +1,29 @@
+import { subDays } from "date-fns";
 import { createContext, PropsWithChildren, useState } from "react";
-
+import { DateRange } from "react-day-picker";
 interface DashboardContextType {
-  date?: Date;
-  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  range?: DateRange;
+  setRange: React.Dispatch<React.SetStateAction<DateRange>>;
 }
 
-export const DashboardContext = createContext<DashboardContextType>({
-  date: new Date(),
-  setDate: () => {},
-});
+const today = new Date();
+
+const initialState = {
+  range: {
+    from: subDays(today, 6),
+    to: today,
+  },
+  setRange: () => {},
+};
+
+export const DashboardContext =
+  createContext<DashboardContextType>(initialState);
 
 export const DashboardContextProvider = ({ children }: PropsWithChildren) => {
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [range, setRange] = useState<DateRange>(initialState.range);
 
   return (
-    <DashboardContext.Provider value={{ date, setDate }}>
+    <DashboardContext.Provider value={{ range, setRange }}>
       {children}
     </DashboardContext.Provider>
   );
