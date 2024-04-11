@@ -1,17 +1,17 @@
 "use client";
 
-import { CalendarWeekOverview } from "@/components/dashboard/calendar-week/overview";
+import { CalendarWeekContainer } from "@/components/dashboard/calendar-week/container";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
 import { DashboardContextProvider } from "@/context/dashboard";
 import React from "react";
 
 export default function DashboardPage() {
   return (
-    <DashboardContextProvider>
-      <div className="flex flex-1">
+    <div className="flex flex-1">
+      <DashboardContextProvider>
         <DashboardSidebar />
-        <CalendarWeekOverview />
-      </div>
-    </DashboardContextProvider>
+        <CalendarWeekContainer />
+      </DashboardContextProvider>
+    </div>
   );
 }

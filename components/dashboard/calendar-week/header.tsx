@@ -32,29 +32,26 @@ export const CalendarHeader = () => {
   }, [range]);
 
   return (
-    <div className="flex flex-grow-0 w-full flex-row justify-around">
+    <div className="flex flex-grow-0 w-full justify-around pt-6 pb-2">
       {eachDayOfInterval({ start, end }).map((date, index) => {
         const isToday = isSameDay(new Date(), date);
         return (
           <div
             key={`calendar-week-header-day-${index}`}
-            className="flex flex-col items-center"
+            className={cn(
+              "flex flex-row gap-x-2 items-center justify-around px-2 rounded-sm",
+              isToday && "bg-blue-500 text-white"
+            )}
           >
             <p
               className={cn(
-                "uppercase text-sm font-medium",
-                isToday && "text-blue-600"
+                "uppercase font-medium text-gray-500",
+                isToday && "text-white"
               )}
             >
               {getDayName(getDay(date), { asAbbreviation: true })}
             </p>
-            <h2
-              className={cn(
-                "text-4xl p-3 rounded-full font-normal",
-                openSans.className,
-                isToday && "bg-blue-600 text-white"
-              )}
-            >
+            <h2 className={cn("font-semibold", openSans.className)}>
               {getDate(date)}
             </h2>
           </div>
