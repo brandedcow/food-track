@@ -5,12 +5,14 @@ import {
   eachDayOfInterval,
   eachHourOfInterval,
   endOfDay,
+  format,
   getHours,
   startOfDay,
   subDays,
 } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import { CalendarDay } from "./calendar-day";
+import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
 
 export const CalendarDaysOverview = () => {
   const { range } = useContext(DashboardContext);
@@ -28,12 +30,16 @@ export const CalendarDaysOverview = () => {
   }, [range]);
 
   return (
-    <div className="flex flex-1">
-      <div className="overflow-y-scroll">
+    <div className="flex flex-col overflow-y-scroll">
+      <div className="flex ">
         <TimeLabel />
-        {eachDayOfInterval({ start, end }).map((date, index) => {
-          return <CalendarDay key={`calendar-week-days-${index}`} day={date} />;
-        })}
+        <div className="flex w-full">
+          {eachDayOfInterval({ start, end }).map((date, index) => {
+            return (
+              <CalendarDay key={`calendar-week-days-${index}`} day={date} />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
@@ -46,11 +52,16 @@ const TimeLabel = () => {
   });
 
   return (
-    <div>
-      Columns
+    <div
+      className="flex flex-col"
+      style={{ width: CALENDAR_TIME_LABEL_OFFSET }}
+    >
       {hours.map((hour, index) => (
-        <div key={`time-label-${index}`} className="h-10">
-          <p>{getHours(hour)}</p>
+        <div
+          key={`time-label-${index}`}
+          className="h-10 pr-2 flex items-end justify-end"
+        >
+          <p className="text-sm text-gray-400">{format(hour, "h aa")}</p>
         </div>
       ))}
     </div>

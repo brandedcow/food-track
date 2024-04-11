@@ -19,12 +19,21 @@ const initialState = {
 export const DashboardContext =
   createContext<DashboardContextType>(initialState);
 
-export const DashboardContextProvider = ({ children }: PropsWithChildren) => {
+interface DashboardContextProviderProps {
+  className?: string;
+}
+
+export const DashboardContextProvider = ({
+  children,
+  className,
+}: PropsWithChildren<DashboardContextProviderProps>) => {
   const [range, setRange] = useState<DateRange>(initialState.range);
 
   return (
-    <DashboardContext.Provider value={{ range, setRange }}>
-      {children}
-    </DashboardContext.Provider>
+    <div className={className}>
+      <DashboardContext.Provider value={{ range, setRange }}>
+        {children}
+      </DashboardContext.Provider>
+    </div>
   );
 };

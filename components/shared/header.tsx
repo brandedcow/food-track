@@ -9,7 +9,7 @@ export const Header = async ({}) => {
   const initials = session?.user?.name?.charAt(0).toUpperCase();
 
   return (
-    <div className="flex justify-between items-center px-6 py-4 gap-x-4 border border-b-slate-700">
+    <div className="flex flex-grow-0 justify-between items-center px-6 py-4 gap-x-4 border border-b-slate-200">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbLink href="/" className="text-2xl">

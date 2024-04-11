@@ -13,6 +13,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 
 import { Open_Sans } from "next/font/google";
+import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -32,7 +33,10 @@ export const CalendarHeader = () => {
   }, [range]);
 
   return (
-    <div className="flex flex-grow-0 w-full justify-around pt-6 pb-2">
+    <div
+      className="flex flex-grow-0 justify-around pt-6 pb-2"
+      style={{ marginLeft: CALENDAR_TIME_LABEL_OFFSET }}
+    >
       {eachDayOfInterval({ start, end }).map((date, index) => {
         const isToday = isSameDay(new Date(), date);
         return (

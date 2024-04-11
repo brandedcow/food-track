@@ -12,7 +12,7 @@ export const DashboardSidebar = () => {
   const { range, setRange } = useContext(DashboardContext);
 
   return (
-    <div className="flex flex-col p-6 gap-y-4">
+    <div className="flex flex-grow-0 h-full flex-col p-6 gap-y-4">
       <Calendar
         mode="range"
         defaultMonth={new Date()}
