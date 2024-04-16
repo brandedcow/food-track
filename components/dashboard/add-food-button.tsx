@@ -1,13 +1,10 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 
-export const AddFoodButton = () => {
-  const handleClick = async () => {
-    console.log("click");
-  };
-
-  return (
-    <Button size="lg" onClick={handleClick}>
+export const AddFoodButton = () => (
+  <Button size="lg" asChild>
+    <Link href={{ pathname: "dashboard", query: { modal: "add-food" } }}>
       Add Food
-    </Button>
-  );
-};
+    </Link>
+  </Button>
+);
