@@ -47,18 +47,13 @@ const AddFoodFormContent = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("on submit");
-    const email = session?.data?.user?.email;
-    if (!email) return;
-
     const data = {
       title: values.title,
       start: new Date(),
       end: new Date(),
     };
 
-    console.log({ email, data });
-    addEvent(email, data);
+    addEvent(data);
   };
 
   return (

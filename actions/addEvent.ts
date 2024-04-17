@@ -1,15 +1,20 @@
 "use server";
 
+import { auth } from "@/auth";
 import { getUserByEmail } from "@/data/user";
 import { prisma } from "@/lib/db";
 import { CalendarEvent } from "@prisma/client";
+import { redirect } from "next/navigation";
 
-export const addEvent = async (
-  email: string,
-  data: Omit<CalendarEvent, "id" | "userId">
-) => {
+export const addEvent = async (data: Omit<CalendarEvent, "id" | "userId">) => {
   try {
-    const user = await getUserByEmail(email);
+    const session = await auth();
+
+    if (!session || !session.user || !session.user.email) {
+      throw new Error("Invalid session");
+    }
+
+    const user = await getUserByEmail(session.user.email);
 
     if (!user) {
       throw new Error("User not found");
@@ -21,9 +26,7 @@ export const addEvent = async (
         ...data,
       },
     });
+  } catch (error) {}
 
-    return { success: true };
-  } catch (error) {
-    return { error };
-  }
+  redirect("/dashboard");
 };
