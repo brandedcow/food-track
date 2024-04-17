@@ -1,12 +1,29 @@
 "use server";
 
+import { getUserByEmail } from "@/data/user";
 import { prisma } from "@/lib/db";
 import { CalendarEvent } from "@prisma/client";
 
-export const addEvent = async (data: CalendarEvent) => {
+export const addEvent = async (
+  email: string,
+  data: Omit<CalendarEvent, "id" | "userId">
+) => {
   try {
-    const newEvent = await prisma.calendarEvent.create({
-      data,
+    const user = await getUserByEmail(email);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await prisma.calendarEvent.create({
+      data: {
+        userId: user.id,
+        ...data,
+      },
     });
-  } catch (error) {}
+
+    return { success: true };
+  } catch (error) {
+    return { error };
+  }
 };

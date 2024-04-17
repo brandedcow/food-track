@@ -23,7 +23,6 @@ export const CalendarDaysOverview = () => {
 
   useEffect(() => {
     if (range && !!range.from && !!range.to) {
-      console.log("change dates");
       setStartDate(range.from);
       setEndDate(range.to);
     }

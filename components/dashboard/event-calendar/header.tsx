@@ -26,7 +26,6 @@ export const CalendarHeader = () => {
 
   useEffect(() => {
     if (range && !!range.from && !!range.to) {
-      console.log("change dates");
       setStartDate(range.from);
       setEndDate(range.to);
     }
