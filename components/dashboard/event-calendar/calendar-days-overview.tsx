@@ -1,33 +1,24 @@
 "use client";
 
-import { DashboardContext } from "@/context/dashboard";
 import {
   eachDayOfInterval,
   eachHourOfInterval,
   endOfDay,
   format,
-  getHours,
   startOfDay,
-  subDays,
 } from "date-fns";
-import { useContext, useEffect, useState } from "react";
 import { CalendarDay } from "./calendar-day";
 import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
 
-export const CalendarDaysOverview = () => {
-  const { range } = useContext(DashboardContext);
-  const [start, setStartDate] = useState<Date>(
-    range?.from ?? subDays(new Date(), 7)
-  );
-  const [end, setEndDate] = useState<Date>(range?.to ?? new Date());
+interface CalendarDaysOverviewProps {
+  start: Date;
+  end: Date;
+}
 
-  useEffect(() => {
-    if (range && !!range.from && !!range.to) {
-      setStartDate(range.from);
-      setEndDate(range.to);
-    }
-  }, [range]);
-
+export const CalendarDaysOverview = ({
+  start,
+  end,
+}: CalendarDaysOverviewProps) => {
   return (
     <div className="flex flex-col overflow-y-scroll">
       <div className="flex ">

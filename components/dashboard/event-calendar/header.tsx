@@ -17,20 +17,12 @@ import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
-export const CalendarHeader = () => {
-  const { range } = useContext(DashboardContext);
-  const [start, setStartDate] = useState<Date>(
-    range?.from ?? subDays(new Date(), 7)
-  );
-  const [end, setEndDate] = useState<Date>(range?.to ?? new Date());
+interface CalendarHeaderProps {
+  start: Date;
+  end: Date;
+}
 
-  useEffect(() => {
-    if (range && !!range.from && !!range.to) {
-      setStartDate(range.from);
-      setEndDate(range.to);
-    }
-  }, [range]);
-
+export const CalendarHeader = ({ start, end }: CalendarHeaderProps) => {
   return (
     <div
       className="flex flex-grow-0 justify-around pt-6 pb-2"
