@@ -1,17 +1,28 @@
-import { eachHourOfInterval, endOfDay, format, startOfDay } from "date-fns";
+"use client";
+
+import { CalendarEvent } from "@prisma/client";
+import { eachHourOfInterval, endOfDay, isSameDay, startOfDay } from "date-fns";
 
 interface CalendarDayProps {
   day: Date;
+  events: CalendarEvent[];
 }
 
-export const CalendarDay = ({ day }: CalendarDayProps) => {
+export const CalendarDay = ({ day, events }: CalendarDayProps) => {
+  const startInMilliseconds = startOfDay(day).getTime();
+  const endInMilliseconds = endOfDay(day).getTime();
+
   const hours = eachHourOfInterval({
     start: startOfDay(new Date()),
     end: endOfDay(new Date()),
   });
 
+  const dayEvents = events.filter((event) =>
+    isSameDay(new Date(day), new Date(event.start))
+  );
+
   return (
-    <div className="flex flex-1 flex-col border-l border-gray-100">
+    <div className="relative flex flex-1 flex-col border-l border-gray-100">
       {hours.map((hour, index) => (
         <div
           key={`time-label-${index}`}
@@ -20,6 +31,35 @@ export const CalendarDay = ({ day }: CalendarDayProps) => {
           <p className="text-sm text-gray-400"></p>
         </div>
       ))}
+      {dayEvents.map((event, index) => {
+        const eventStart = new Date(event.start).getTime();
+        const eventEnd = new Date(event.end).getTime();
+
+        const startPercent =
+          ((eventStart - startInMilliseconds) /
+            (endInMilliseconds - startInMilliseconds)) *
+          100;
+
+        const endPercent =
+          ((eventEnd - startInMilliseconds) /
+            (endInMilliseconds - startInMilliseconds)) *
+          100;
+
+        const durationPercent = endPercent - startPercent;
+
+        return (
+          <div
+            key={`${day}-event-${index}`}
+            className={`absolute w-full flex justify-center items-center py-3 bg-green-400`}
+            style={{
+              top: `${startPercent}%`,
+              height: `${durationPercent}%`,
+            }}
+          >
+            <p>{event.title}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -8,15 +8,11 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 
 export default function DashboardPage() {
-  const searchParams = useSearchParams();
-
-  const modal = searchParams.get("modal");
-
   return (
     <DashboardContextProvider className="flex overflow-hidden">
       <DashboardSidebar />
-      <EventCalendarContainer events={[]} />
-      <AddFoodForm isOpen={modal === "add-food"} />
+      <EventCalendarContainer />
+      <AddFoodForm />
     </DashboardContextProvider>
   );
 }

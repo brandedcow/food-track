@@ -19,16 +19,19 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { addEvent } from "@/actions/addEvent";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { add } from "date-fns";
 
 const formSchema = z.object({
   title: z.string().min(2),
 });
 
-interface AddFoodFormProps {
-  isOpen?: boolean;
-}
+interface AddFoodFormProps {}
 
-export const AddFoodForm = ({ isOpen }: AddFoodFormProps) => {
+export const AddFoodForm = ({}: AddFoodFormProps) => {
+  const searchParams = useSearchParams();
+  const isOpen = searchParams.get("modal") === "add-food";
+
   return isOpen ? (
     <Modal>
       <AddFoodFormContent />
@@ -47,10 +50,12 @@ const AddFoodFormContent = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const start = new Date();
+    const end = add(start, { hours: 1 });
     const data = {
       title: values.title,
-      start: new Date(),
-      end: new Date(),
+      start,
+      end,
     };
 
     addEvent(data);
