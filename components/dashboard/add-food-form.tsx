@@ -21,6 +21,7 @@ import { addEvent } from "@/actions/addEvent";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { add } from "date-fns";
+import { CalendarEventType } from "@prisma/client";
 
 const formSchema = z.object({
   title: z.string().min(2),
@@ -56,6 +57,7 @@ const AddFoodFormContent = () => {
       title: values.title,
       start,
       end,
+      type: CalendarEventType.Food,
     };
 
     addEvent(data);

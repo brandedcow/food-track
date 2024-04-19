@@ -52,11 +52,18 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum CalendarEventType {
+  Food
+  Stool
+  Note
+}
+
 model CalendarEvent {
-  id     String   @id @default(cuid())
+  id     String            @id @default(cuid())
   userId String
   title  String
+  type   CalendarEventType @default(Food)
   start  DateTime
   end    DateTime
-  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
