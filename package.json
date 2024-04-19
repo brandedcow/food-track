@@ -7,17 +7,21 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "add:ui": "npx shadcn-ui@latest add"
+    "add:ui": "npx shadcn-ui@latest add",
+    "migrate:db": "npx prisma format && npx prisma migrate dev"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.5.2",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.365.0",
     "next": "14.1.4",

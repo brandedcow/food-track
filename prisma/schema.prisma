@@ -59,11 +59,12 @@ enum CalendarEventType {
 }
 
 model CalendarEvent {
-  id     String            @id @default(cuid())
-  userId String
-  title  String
-  type   CalendarEventType @default(Food)
-  start  DateTime
-  end    DateTime
-  user   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String            @id @default(cuid())
+  userId      String
+  title       String?           @default("")
+  description String?           @default("")
+  type        CalendarEventType @default(Food)
+  start       DateTime
+  end         DateTime
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

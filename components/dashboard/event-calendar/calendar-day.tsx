@@ -1,6 +1,7 @@
 "use client";
 
-import { CalendarEvent } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import { CalendarEvent, CalendarEventType } from "@prisma/client";
 import { eachHourOfInterval, endOfDay, isSameDay, startOfDay } from "date-fns";
 
 interface CalendarDayProps {
@@ -50,7 +51,10 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
         return (
           <div
             key={`${day}-event-${index}`}
-            className={`absolute w-full flex justify-center items-center py-3 bg-green-400`}
+            className={cn(
+              `absolute w-full flex justify-center items-center py-3 bg-green-300`,
+              event.type === CalendarEventType.Stool && "bg-amber-600"
+            )}
             style={{
               top: `${startPercent}%`,
               height: `${durationPercent}%`,

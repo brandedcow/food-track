@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
         },
       },
     });
-    return Response.json(response);
+    return Response.json({ success: true, data: response });
   } catch (error) {
     return Response.json({ success: false, error });
   }

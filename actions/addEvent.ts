@@ -6,7 +6,10 @@ import { prisma } from "@/lib/db";
 import { CalendarEvent } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-export const addEvent = async (data: Omit<CalendarEvent, "id" | "userId">) => {
+type AddEventData = Pick<CalendarEvent, "start" | "end"> &
+  Partial<CalendarEvent>;
+
+export const addEvent = async (data: AddEventData) => {
   try {
     const session = await auth();
 
@@ -26,7 +29,9 @@ export const addEvent = async (data: Omit<CalendarEvent, "id" | "userId">) => {
         ...data,
       },
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log("addEvent", { error });
+  }
 
   redirect("/dashboard");
 };

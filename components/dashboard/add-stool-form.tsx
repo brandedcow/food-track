@@ -13,7 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Input } from "../ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { addEvent } from "@/actions/addEvent";
@@ -21,42 +20,43 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { add } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
-  title: z.string().min(2),
+  description: z.string().min(2),
 });
 
-interface AddFoodFormProps {}
+interface AddStoolFormProps {}
 
-export const AddFoodForm = ({}: AddFoodFormProps) => {
+export const AddStoolForm = ({}: AddStoolFormProps) => {
   const searchParams = useSearchParams();
-  const isOpen = searchParams.get("modal") === "add-food";
+  const isOpen = searchParams.get("modal") === "add-stool";
 
   return isOpen ? (
     <Modal>
-      <AddFoodFormContent />
+      <AddStoolFormContent />
     </Modal>
   ) : null;
 };
 
-const AddFoodFormContent = () => {
+const AddStoolFormContent = () => {
   const session = useSession();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      description: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const start = new Date();
-    const end = add(start, { hours: 1 });
+    const end = add(start, { minutes: 15 });
     const data = {
-      title: values.title,
+      description: values.description,
       start,
       end,
-      type: CalendarEventType.Food,
+      type: CalendarEventType.Stool,
     };
 
     addEvent(data);
@@ -67,20 +67,24 @@ const AddFoodFormContent = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Add Food</CardTitle>
+            <CardTitle>Add Stool</CardTitle>
             <CardDescription>
-              Time will be added automatically when food item is added.
+              Take note of things like amount, color, size, and urgency.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Notes</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Textarea
+                      placeholder="Amount: Moderate, Color: Brown, Size: Medium, Urgency: Low"
+                      className="resize-none"
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}
