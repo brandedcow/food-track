@@ -52,12 +52,12 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
           <div
             key={`${day}-event-${index}`}
             className={cn(
-              `absolute w-full flex justify-center items-center py-3 bg-green-300`,
+              `absolute w-full flex justify-center items-center p-3 bg-green-300`,
               event.type === CalendarEventType.Stool && "bg-amber-600"
             )}
             style={{
               top: `${startPercent}%`,
-              height: `${durationPercent}%`,
+              minHeight: `${durationPercent}%`,
             }}
           >
             <p>{event.title}</p>
