@@ -1,16 +1,8 @@
 "use client";
 
-import { DashboardContext } from "@/context/dashboard";
 import { getDayName } from "@/lib/date-utils";
 import { cn } from "@/lib/utils";
-import {
-  eachDayOfInterval,
-  getDate,
-  getDay,
-  isSameDay,
-  subDays,
-} from "date-fns";
-import { useContext, useEffect, useState } from "react";
+import { eachDayOfInterval, getDate, getDay, isSameDay } from "date-fns";
 
 import { Open_Sans } from "next/font/google";
 import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
