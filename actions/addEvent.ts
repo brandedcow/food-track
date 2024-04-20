@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { getUserByEmail } from "@/data/user";
 import { prisma } from "@/lib/db";
 import { CalendarEvent } from "@prisma/client";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 type AddEventData = Pick<CalendarEvent, "start" | "end"> &
@@ -33,5 +34,6 @@ export const addEvent = async (data: AddEventData) => {
     console.log("addEvent", { error });
   }
 
+  revalidateTag("calendar-event");
   redirect("/dashboard");
 };

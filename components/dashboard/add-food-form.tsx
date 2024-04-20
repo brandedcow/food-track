@@ -17,10 +17,11 @@ import { Input } from "../ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { addEvent } from "@/actions/addEvent";
-import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { add } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
+import { fetchEventCalendarData } from "@/lib/fetch-calls";
+import useCalendarEvents from "@/store/useCalendarEvents";
 
 const formSchema = z.object({
   title: z.string().min(2),
@@ -40,7 +41,7 @@ export const AddFoodForm = ({}: AddFoodFormProps) => {
 };
 
 const AddFoodFormContent = () => {
-  const session = useSession();
+  const { setCalendarEvents } = useCalendarEvents();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +50,7 @@ const AddFoodFormContent = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const start = new Date();
     const end = add(start, { hours: 1 });
     const data = {
@@ -59,7 +60,19 @@ const AddFoodFormContent = () => {
       type: CalendarEventType.Food,
     };
 
-    addEvent(data);
+    await addEvent(data);
+
+    try {
+      const { success, data: events } = await fetchEventCalendarData(
+        start,
+        end
+      );
+      if (success && data) {
+        setCalendarEvents(events);
+      }
+    } catch (error) {
+      console.warn("add-food-form", error);
+    }
   };
 
   return (
