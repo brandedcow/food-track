@@ -11,7 +11,7 @@ const inter = Inter({
 
 interface TimePickerProps {
   time: string;
-  setTime: React.Dispatch<SetStateAction<string>>;
+  setTime: (time: string) => void;
 }
 
 export function TimePicker({ time, setTime }: TimePickerProps) {

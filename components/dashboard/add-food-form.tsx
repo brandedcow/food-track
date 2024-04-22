@@ -18,7 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { addEvent } from "@/actions/addEvent";
 import { useSearchParams } from "next/navigation";
-import { add } from "date-fns";
+import { add, addMinutes, format } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { fetchEventCalendarData } from "@/lib/fetch-calls";
 import useCalendarEvents from "@/store/useCalendarEvents";
@@ -26,7 +26,10 @@ import { DateTimePicker } from "../shared/date-time-picker/container";
 
 const formSchema = z.object({
   title: z.string().min(2),
-  start: z.date(),
+  timerange: z.object({
+    start: z.date(),
+    end: z.date(),
+  }),
 });
 
 interface AddFoodFormProps {}
@@ -49,14 +52,21 @@ const AddFoodFormContent = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      timerange: {
+        start: new Date(),
+        end: addMinutes(new Date(), 30),
+      },
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const start = new Date();
-    const end = add(start, { hours: 1 });
+    const {
+      title,
+      timerange: { start, end },
+    } = values;
+
     const data = {
-      title: values.title,
+      title,
       start,
       end,
       type: CalendarEventType.Food,
@@ -64,16 +74,9 @@ const AddFoodFormContent = () => {
 
     await addEvent(data);
 
-    try {
-      const { success, data: events } = await fetchEventCalendarData(
-        start,
-        end
-      );
-      if (success && data) {
-        setCalendarEvents(events);
-      }
-    } catch (error) {
-      console.warn("add-food-form", error);
+    const { success, data: events } = await fetchEventCalendarData(start, end);
+    if (success && data) {
+      setCalendarEvents(events);
     }
   };
 
@@ -87,7 +90,7 @@ const AddFoodFormContent = () => {
               Time will be added automatically when food item is added.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-col gap-y-2">
             <FormField
               control={form.control}
               name="title"
@@ -102,7 +105,7 @@ const AddFoodFormContent = () => {
             />
             <FormField
               control={form.control}
-              name="start"
+              name="timerange"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Time</FormLabel>
