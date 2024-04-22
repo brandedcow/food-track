@@ -22,9 +22,11 @@ import { add } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { fetchEventCalendarData } from "@/lib/fetch-calls";
 import useCalendarEvents from "@/store/useCalendarEvents";
+import { DateTimePicker } from "../shared/date-time-picker/container";
 
 const formSchema = z.object({
   title: z.string().min(2),
+  start: z.date(),
 });
 
 interface AddFoodFormProps {}
@@ -94,6 +96,18 @@ const AddFoodFormContent = () => {
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="start"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Time</FormLabel>
+                  <FormControl>
+                    <DateTimePicker {...field} />
                   </FormControl>
                 </FormItem>
               )}
