@@ -18,18 +18,21 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { addEvent } from "@/actions/addEvent";
 import { useSearchParams } from "next/navigation";
-import { add, addMinutes, format } from "date-fns";
+import { addMinutes } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { fetchEventCalendarData } from "@/lib/fetch-calls";
 import useCalendarEvents from "@/store/useCalendarEvents";
 import { DateTimePicker } from "../shared/date-time-picker/container";
+import { Textarea } from "../ui/textarea";
+import useSelectedDateRange from "@/store/useSelectedDateRange";
 
 const formSchema = z.object({
-  title: z.string().min(2),
+  title: z.string().min(1),
   timerange: z.object({
     start: z.date(),
     end: z.date(),
   }),
+  description: z.string(),
 });
 
 interface AddFoodFormProps {}
@@ -47,6 +50,7 @@ export const AddFoodForm = ({}: AddFoodFormProps) => {
 
 const AddFoodFormContent = () => {
   const { setCalendarEvents } = useCalendarEvents();
+  const { selectedDateRange } = useSelectedDateRange();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,6 +60,7 @@ const AddFoodFormContent = () => {
         start: new Date(),
         end: addMinutes(new Date(), 30),
       },
+      description: "",
     },
   });
 
@@ -74,7 +79,10 @@ const AddFoodFormContent = () => {
 
     await addEvent(data);
 
-    const { success, data: events } = await fetchEventCalendarData(start, end);
+    const { success, data: events } = await fetchEventCalendarData(
+      selectedDateRange.from,
+      selectedDateRange.to
+    );
     if (success && data) {
       setCalendarEvents(events);
     }
@@ -111,6 +119,22 @@ const AddFoodFormContent = () => {
                   <FormLabel>Time</FormLabel>
                   <FormControl>
                     <DateTimePicker {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Notes</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Add additional information."
+                      className="resize-none"
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
               )}

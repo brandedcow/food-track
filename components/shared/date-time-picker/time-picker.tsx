@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 import { Inter } from "next/font/google";
-import React, { SetStateAction } from "react";
+import React from "react";
 
 const inter = Inter({
   subsets: ["latin"],

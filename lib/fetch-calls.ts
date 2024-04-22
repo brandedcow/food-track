@@ -1,8 +1,11 @@
 export const fetchEventCalendarData = async (
-  start: Date,
-  end: Date
+  start?: Date,
+  end?: Date
 ): Promise<{ success: boolean; data?: any; error?: any }> => {
-  console.log("fetch data");
+  if (!start || !end) {
+    return { success: false, error: "Invalid dates" };
+  }
+
   try {
     const response = await fetch(
       `/api/calendar-event?start=${start.getTime()}&end=${end.getTime()}`,
