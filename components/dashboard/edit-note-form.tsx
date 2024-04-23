@@ -14,17 +14,9 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { redirect, useSearchParams } from "next/navigation";
-import { addMinutes } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { DateTimePicker } from "../shared/date-time-picker/container";
 import { Textarea } from "../ui/textarea";
@@ -33,7 +25,7 @@ import useCalendarEvents from "@/store/useCalendarEvents";
 import { editEvent } from "@/actions/editEvent";
 
 const formSchema = z.object({
-  title: z.string(),
+  title: z.string().min(1),
   timerange: z.object({
     start: z.date(),
     end: z.date(),
@@ -41,26 +33,26 @@ const formSchema = z.object({
   description: z.string(),
 });
 
-interface EditFoodFormProps {}
+interface EditNoteFormProps {}
 
-export const EditFoodForm = ({}: EditFoodFormProps) => {
+export const EditNoteForm = ({}: EditNoteFormProps) => {
   const searchParams = useSearchParams();
-  const isOpen = searchParams.get("modal") === "edit-food";
+  const isOpen = searchParams.get("modal") === "edit-note";
 
   return (
     <Modal isOpen={isOpen}>
-      <EditFoodFormContent />
+      <EditNoteFormContent />
     </Modal>
   );
 };
 
-const EditFoodFormContent = () => {
-  const { calendarEvents } = useCalendarEvents();
+const EditNoteFormContent = () => {
   const { fetchCalendarEvents } = useCalendarEventsAPI();
+  const { calendarEvents } = useCalendarEvents();
   const searchParams = useSearchParams();
   const eventId = searchParams.get("id");
 
-  const event = calendarEvents.find((event) => event.id === eventId)!;
+  const event = calendarEvents.find((event) => event.id === eventId);
 
   if (!event) {
     redirect("/dashboard");
@@ -83,18 +75,15 @@ const EditFoodFormContent = () => {
     timerange: { start, end },
     description,
   }: z.infer<typeof formSchema>) => {
-    if (!eventId) {
-      redirect("/dashboard");
-    }
+    if (!eventId) redirect("/dashboard");
 
     const data = {
       title,
       start,
       end,
       description,
-      type: CalendarEventType.Food,
+      type: CalendarEventType.Note,
     };
-    console.log("on submit", data);
     await editEvent(eventId, data);
     await fetchCalendarEvents();
   };
@@ -104,10 +93,9 @@ const EditFoodFormContent = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Edit Food</CardTitle>
+            <CardTitle>Add Note</CardTitle>
             <CardDescription>
-              Use notes to keep track of nutritional information or other
-              important details.
+              Use notes to plan your meals and track your progress.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-y-2">
@@ -120,7 +108,6 @@ const EditFoodFormContent = () => {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -133,7 +120,6 @@ const EditFoodFormContent = () => {
                   <FormControl>
                     <DateTimePicker {...field} />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -150,7 +136,6 @@ const EditFoodFormContent = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

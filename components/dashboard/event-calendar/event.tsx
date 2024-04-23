@@ -40,6 +40,22 @@ export function EventCard({
   const buttonRef = useRef(null);
   const { fetchCalendarEvents } = useCalendarEventsAPI();
 
+  let editForm;
+  switch (type) {
+    case CalendarEventType.Food:
+      editForm = "edit-food";
+      break;
+    case CalendarEventType.Stool:
+      editForm = "edit-stool";
+      break;
+    case CalendarEventType.Note:
+      editForm = "edit-note";
+      break;
+    default:
+      editForm = "edit-food";
+      break;
+  }
+
   const handleDeleteClick = async () => {
     await deleteEvent(id);
     await fetchCalendarEvents();
@@ -96,7 +112,7 @@ export function EventCard({
             <Link
               href={{
                 pathname: "/dashboard",
-                query: { modal: "edit-food", id },
+                query: { modal: editForm, id },
               }}
             >
               Edit
