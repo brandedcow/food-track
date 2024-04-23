@@ -24,7 +24,6 @@ import { DateTimePicker } from "../shared/date-time-picker/container";
 import useSelectedDateRange from "@/store/useSelectedDateRange";
 import useCalendarEvents from "@/store/useCalendarEvents";
 import { fetchEventCalendarData } from "@/lib/fetch-calls";
-import { InspectionPanel } from "lucide-react";
 
 const formSchema = z.object({
   description: z.string(),

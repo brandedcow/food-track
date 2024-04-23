@@ -58,7 +58,7 @@ const AddFoodFormContent = () => {
       title: "",
       timerange: {
         start: new Date(),
-        end: addMinutes(new Date(), 30),
+        end: addMinutes(new Date(), 60),
       },
       description: "",
     },

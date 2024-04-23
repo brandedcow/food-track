@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { CalendarEvent, CalendarEventType } from "@prisma/client";
 import { eachHourOfInterval, endOfDay, isSameDay, startOfDay } from "date-fns";
+import { EventCard } from "./event";
 
 interface CalendarDayProps {
   day: Date;
@@ -27,7 +28,7 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
       {hours.map((hour, index) => (
         <div
           key={`time-label-${index}`}
-          className="h-10 flex items-end justify-end"
+          className="h-10 flex items-end justify-end border-gray-100 border-t"
         >
           <p className="text-sm text-gray-400"></p>
         </div>
@@ -49,19 +50,13 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
         const durationPercent = endPercent - startPercent;
 
         return (
-          <div
+          <EventCard
             key={`${day}-event-${index}`}
-            className={cn(
-              `absolute w-full flex justify-center items-center p-3 bg-green-300`,
-              event.type === CalendarEventType.Stool && "bg-amber-600"
-            )}
-            style={{
-              top: `${startPercent}%`,
-              minHeight: `${durationPercent}%`,
-            }}
-          >
-            <p>{event.title}</p>
-          </div>
+            title={event.title}
+            type={event.type}
+            top={`${startPercent}%`}
+            height={`${durationPercent}%`}
+          />
         );
       })}
     </div>

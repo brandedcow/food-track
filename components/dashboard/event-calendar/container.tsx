@@ -24,7 +24,6 @@ export const EventCalendarContainer = ({}: EventCalendarProps) => {
     const getData = async () => {
       const { success, data } = await fetchEventCalendarData(start, end);
       if (success && data) {
-        console.log("set events");
         setCalendarEvents(data);
       }
     };

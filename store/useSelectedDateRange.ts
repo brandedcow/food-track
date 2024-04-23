@@ -15,7 +15,7 @@ const useSelectedDateRange = create<SelectedDateRangeState>((set) => ({
   setSelectedDateRange: (range) =>
     set(() => ({ selectedDateRange: { from: range?.from, to: range?.to } })),
 
-  // resetDateRange
+  // TODO: resetDateRange
 }));
 
 export default useSelectedDateRange;

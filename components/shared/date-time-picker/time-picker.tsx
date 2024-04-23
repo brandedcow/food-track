@@ -22,6 +22,7 @@ export function TimePicker({ time, setTime }: TimePickerProps) {
 
   const handleClick = () => {
     console.log("clicked");
+    // TODO: Add Select Dropdown for every 15 or 30 minutes for easy selection
   };
 
   const handleBlur = () => {
