@@ -1,3 +1,5 @@
+import { endOfDay, startOfDay } from "date-fns";
+
 export const fetchEventCalendarData = async (
   start?: Date,
   end?: Date
@@ -7,8 +9,11 @@ export const fetchEventCalendarData = async (
   }
 
   try {
+    const from = startOfDay(start).getTime();
+    const to = endOfDay(end).getTime();
+
     const response = await fetch(
-      `/api/calendar-event?start=${start.getTime()}&end=${end.getTime()}`,
+      `/api/calendar-event?start=${from}&end=${to}`,
       {
         next: { tags: ["calendar-event"] },
       }
@@ -16,7 +21,7 @@ export const fetchEventCalendarData = async (
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error("fetchEventCalendarData", error);
+    console.warn("fetchEventCalendarData", error);
     return { success: false, error };
   }
 };
