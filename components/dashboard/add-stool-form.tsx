@@ -16,14 +16,22 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { addEvent } from "@/actions/addEvent";
-import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { add } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { Textarea } from "../ui/textarea";
+import { DateTimePicker } from "../shared/date-time-picker/container";
+import useSelectedDateRange from "@/store/useSelectedDateRange";
+import useCalendarEvents from "@/store/useCalendarEvents";
+import { fetchEventCalendarData } from "@/lib/fetch-calls";
+import { InspectionPanel } from "lucide-react";
 
 const formSchema = z.object({
-  description: z.string().min(2),
+  description: z.string(),
+  timerange: z.object({
+    start: z.date(),
+    end: z.date(),
+  }),
 });
 
 interface AddStoolFormProps {}
@@ -32,34 +40,50 @@ export const AddStoolForm = ({}: AddStoolFormProps) => {
   const searchParams = useSearchParams();
   const isOpen = searchParams.get("modal") === "add-stool";
 
-  return isOpen ? (
-    <Modal>
+  return (
+    <Modal isOpen={isOpen}>
       <AddStoolFormContent />
     </Modal>
-  ) : null;
+  );
 };
 
 const AddStoolFormContent = () => {
-  const session = useSession();
+  const { setCalendarEvents } = useCalendarEvents();
+  const { selectedDateRange } = useSelectedDateRange();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       description: "",
+      timerange: {
+        start: new Date(),
+        end: add(new Date(), { minutes: 15 }),
+      },
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const start = new Date();
-    const end = add(start, { minutes: 15 });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const {
+      timerange: { start, end },
+      description,
+    } = values;
+
     const data = {
-      description: values.description,
+      description,
       start,
       end,
       type: CalendarEventType.Stool,
     };
 
     addEvent(data);
+
+    const { success, data: events } = await fetchEventCalendarData(
+      selectedDateRange.from,
+      selectedDateRange.to
+    );
+    if (success && data) {
+      setCalendarEvents(events);
+    }
   };
 
   return (
@@ -72,7 +96,19 @@ const AddStoolFormContent = () => {
               Take note of things like amount, color, size, and urgency.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex flex-col gap-y-2">
+            <FormField
+              control={form.control}
+              name="timerange"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Time</FormLabel>
+                  <FormControl>
+                    <DateTimePicker {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="description"

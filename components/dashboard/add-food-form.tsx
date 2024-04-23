@@ -41,11 +41,11 @@ export const AddFoodForm = ({}: AddFoodFormProps) => {
   const searchParams = useSearchParams();
   const isOpen = searchParams.get("modal") === "add-food";
 
-  return isOpen ? (
-    <Modal>
+  return (
+    <Modal isOpen={isOpen}>
       <AddFoodFormContent />
     </Modal>
-  ) : null;
+  );
 };
 
 const AddFoodFormContent = () => {
