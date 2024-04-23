@@ -2,6 +2,7 @@
 
 import { SocialButton } from "@/components/auth/social-button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BiError } from "react-icons/bi";
 
@@ -26,6 +27,7 @@ export default function LoginPage() {
           </Alert>
         )}
       </div>
+      <Link href="/">Back</Link>
     </div>
   );
 }
