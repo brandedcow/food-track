@@ -5,8 +5,8 @@ import { CalendarHeader } from "./header";
 import { useEffect, useState } from "react";
 import { endOfDay, startOfDay, subDays } from "date-fns";
 import useSelectedDateRange from "@/store/useSelectedDateRange";
-import { fetchEventCalendarData } from "@/lib/fetch-calls";
 import useCalendarEvents from "@/store/useCalendarEvents";
+import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
 
 export const CALENDAR_TIME_LABEL_OFFSET = 60;
 
@@ -18,22 +18,16 @@ export const EventCalendarContainer = ({}: EventCalendarProps) => {
     selectedDateRange.from ?? subDays(startOfDay(new Date()), 7)
   );
   const [end, setEnd] = useState(selectedDateRange.to ?? endOfDay(new Date()));
-  const { calendarEvents, setCalendarEvents } = useCalendarEvents();
+  const { calendarEvents } = useCalendarEvents();
+  const { fetchCalendarEvents } = useCalendarEventsAPI();
 
   useEffect(() => {
-    const getData = async () => {
-      const { success, data } = await fetchEventCalendarData(start, end);
-      if (success && data) {
-        setCalendarEvents(data);
-      }
-    };
-
     if (!!selectedDateRange.from && !!selectedDateRange.to) {
       setStart(selectedDateRange.from);
       setEnd(selectedDateRange.to);
-      getData();
+      fetchCalendarEvents();
     }
-  }, [selectedDateRange, start, end, setCalendarEvents]);
+  }, [selectedDateRange, start, end, fetchCalendarEvents]);
 
   return (
     <div className="flex flex-col w-full">

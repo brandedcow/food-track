@@ -62,6 +62,7 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
         return (
           <EventCard
             key={`${day}-event-${index}`}
+            id={event.id}
             title={event.title}
             type={event.type}
             time={displayTime}

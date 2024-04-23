@@ -14,18 +14,26 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { useForm } from "react-hook-form";
-import { addEvent } from "@/actions/addEvent";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { addMinutes } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { DateTimePicker } from "../shared/date-time-picker/container";
 import { Textarea } from "../ui/textarea";
 import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
+import useCalendarEvents from "@/store/useCalendarEvents";
+import { editEvent } from "@/actions/editEvent";
 
 const formSchema = z.object({
-  title: z.string().min(1),
+  title: z.string(),
   timerange: z.object({
     start: z.date(),
     end: z.date(),
@@ -33,29 +41,38 @@ const formSchema = z.object({
   description: z.string(),
 });
 
-interface AddNoteFormProps {}
+interface EditFoodFormProps {}
 
-export const AddNoteForm = ({}: AddNoteFormProps) => {
+export const EditFoodForm = ({}: EditFoodFormProps) => {
   const searchParams = useSearchParams();
-  const isOpen = searchParams.get("modal") === "add-note";
+  const isOpen = searchParams.get("modal") === "edit-food";
 
   return (
     <Modal isOpen={isOpen}>
-      <AddNoteFormContent />
+      <EditFoodFormContent />
     </Modal>
   );
 };
 
-const AddNoteFormContent = () => {
+const EditFoodFormContent = () => {
+  const { calendarEvents } = useCalendarEvents();
   const { fetchCalendarEvents } = useCalendarEventsAPI();
+  const searchParams = useSearchParams();
+  const eventId = searchParams.get("id")!;
+
+  const event = calendarEvents.find((event) => event.id === eventId)!;
+
+  if (!event) {
+    redirect("/dashboard");
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      title: event?.title ?? "",
       timerange: {
-        start: new Date(),
-        end: addMinutes(new Date(), 60),
+        start: new Date(event?.start ?? undefined),
+        end: event?.end ? new Date(event.end) : addMinutes(new Date(), 60),
       },
       description: "",
     },
@@ -71,9 +88,10 @@ const AddNoteFormContent = () => {
       start,
       end,
       description,
-      type: CalendarEventType.Note,
+      type: CalendarEventType.Food,
     };
-    await addEvent(data);
+    console.log("on submit", data);
+    await editEvent(eventId, data);
     await fetchCalendarEvents();
   };
 
@@ -82,9 +100,10 @@ const AddNoteFormContent = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Add Note</CardTitle>
+            <CardTitle>Edit Food</CardTitle>
             <CardDescription>
-              Use notes to plan your meals and track your progress.
+              Use notes to keep track of nutritional information or other
+              important details.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-y-2">
@@ -97,6 +116,7 @@ const AddNoteFormContent = () => {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -109,6 +129,7 @@ const AddNoteFormContent = () => {
                   <FormControl>
                     <DateTimePicker {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -125,6 +146,7 @@ const AddNoteFormContent = () => {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

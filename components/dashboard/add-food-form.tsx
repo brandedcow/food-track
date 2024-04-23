@@ -20,11 +20,9 @@ import { addEvent } from "@/actions/addEvent";
 import { useSearchParams } from "next/navigation";
 import { addMinutes } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
-import { fetchEventCalendarData } from "@/lib/fetch-calls";
-import useCalendarEvents from "@/store/useCalendarEvents";
 import { DateTimePicker } from "../shared/date-time-picker/container";
 import { Textarea } from "../ui/textarea";
-import useSelectedDateRange from "@/store/useSelectedDateRange";
+import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -49,8 +47,7 @@ export const AddFoodForm = ({}: AddFoodFormProps) => {
 };
 
 const AddFoodFormContent = () => {
-  const { setCalendarEvents } = useCalendarEvents();
-  const { selectedDateRange } = useSelectedDateRange();
+  const { fetchCalendarEvents } = useCalendarEventsAPI();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,13 +61,11 @@ const AddFoodFormContent = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const {
-      title,
-      timerange: { start, end },
-      description,
-    } = values;
-
+  const onSubmit = async ({
+    title,
+    timerange: { start, end },
+    description,
+  }: z.infer<typeof formSchema>) => {
     const data = {
       title,
       start,
@@ -78,16 +73,8 @@ const AddFoodFormContent = () => {
       description,
       type: CalendarEventType.Food,
     };
-
     await addEvent(data);
-
-    const { success, data: events } = await fetchEventCalendarData(
-      selectedDateRange.from,
-      selectedDateRange.to
-    );
-    if (success && data) {
-      setCalendarEvents(events);
-    }
+    await fetchCalendarEvents();
   };
 
   return (
