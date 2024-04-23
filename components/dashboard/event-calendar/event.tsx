@@ -49,11 +49,12 @@ export function EventCard({
           ref={buttonRef}
           className={cn(
             "absolute w-[95%] hover:shadow-md hover:shadow-zinc-400 bg-blend-overlay",
+            isSelected && "shadow-md shadow-zinc-400 bg-blend-overlay",
             type === CalendarEventType.Food &&
               "bg-green-600 hover:bg-green-600",
             type === CalendarEventType.Stool &&
               "bg-amber-600 hover:bg-amber-600",
-            isSelected && "shadow-md shadow-zinc-400 bg-blend-overlay"
+            type === CalendarEventType.Note && "bg-blue-500 hover:bg-blue-500"
           )}
           style={{ top, height }}
           onClick={() => setIsSelected(true)}
@@ -62,9 +63,9 @@ export function EventCard({
           <p className="text-gray-100 truncate">{title}</p>
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="flex flex-col gap-y-1">
         <h2 className="text-l font-semibold">{title}</h2>
-        <p className="text-gray-500">{time}</p>
+        <p className="text-sm text-gray-500">{time}</p>
         <p className="text-sm">{description}</p>
       </PopoverContent>
     </Popover>
