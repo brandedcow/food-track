@@ -3,6 +3,8 @@ import { Button } from "../ui/button";
 
 export const AddNoteButton = () => (
   <Button variant="outline" size="lg" asChild>
-    <Link href={{ pathname: "dashboard", query: "add-note" }}>Add Note</Link>
+    <Link href={{ pathname: "dashboard", query: { modal: "add-note" } }}>
+      Add Note
+    </Link>
   </Button>
 );

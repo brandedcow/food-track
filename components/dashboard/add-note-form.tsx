@@ -35,20 +35,20 @@ const formSchema = z.object({
   description: z.string(),
 });
 
-interface AddFoodFormProps {}
+interface AddNoteFormProps {}
 
-export const AddFoodForm = ({}: AddFoodFormProps) => {
+export const AddNoteForm = ({}: AddNoteFormProps) => {
   const searchParams = useSearchParams();
-  const isOpen = searchParams.get("modal") === "add-food";
+  const isOpen = searchParams.get("modal") === "add-note";
 
   return (
     <Modal isOpen={isOpen}>
-      <AddFoodFormContent />
+      <AddNoteFormContent />
     </Modal>
   );
 };
 
-const AddFoodFormContent = () => {
+const AddNoteFormContent = () => {
   const { setCalendarEvents } = useCalendarEvents();
   const { selectedDateRange } = useSelectedDateRange();
 
@@ -76,7 +76,7 @@ const AddFoodFormContent = () => {
       start,
       end,
       description,
-      type: CalendarEventType.Food,
+      type: CalendarEventType.Note,
     };
 
     await addEvent(data);
@@ -95,10 +95,9 @@ const AddFoodFormContent = () => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Add Food</CardTitle>
+            <CardTitle>Add Note</CardTitle>
             <CardDescription>
-              Use notes to keep track of nutritional information or other
-              important details.
+              Use notes to plan your meals and track your progress.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-y-2">

@@ -25,7 +25,7 @@ export const Modal = ({
   return open ? (
     <div
       className="absolute h-full w-full flex items-center justify-center p-24 bg-black bg-opacity-50"
-      onClick={handleCloseModal}
+      // onClick={handleCloseModal}
     >
       {children}
     </div>
