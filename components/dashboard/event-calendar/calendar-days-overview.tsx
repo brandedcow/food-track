@@ -57,7 +57,7 @@ const TimeLabel = () => {
       {hours.map((hour, index) => (
         <div
           key={`time-label-${index}`}
-          className="h-10 pr-2 flex items-start justify-end border-gray-100 border-t"
+          className="h-10 pr-2 flex items-start justify-end border-gray-200 border-t"
         >
           <p className="text-sm text-gray-400">{format(hour, "h aa")}</p>
         </div>

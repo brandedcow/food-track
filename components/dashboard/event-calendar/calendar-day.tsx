@@ -1,8 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { CalendarEvent, CalendarEventType } from "@prisma/client";
-import { eachHourOfInterval, endOfDay, isSameDay, startOfDay } from "date-fns";
+import { CalendarEvent } from "@prisma/client";
+import {
+  eachHourOfInterval,
+  endOfDay,
+  format,
+  isSameDay,
+  startOfDay,
+} from "date-fns";
 import { EventCard } from "./event";
 
 interface CalendarDayProps {
@@ -24,11 +29,11 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
   );
 
   return (
-    <div className="relative flex flex-1 flex-col border-l border-gray-100">
+    <div className="relative flex flex-1 flex-col border-l border-gray-200">
       {hours.map((hour, index) => (
         <div
           key={`time-label-${index}`}
-          className="h-10 flex items-end justify-end border-gray-100 border-t"
+          className="h-10 flex items-end justify-end border-gray-200 border-t"
         >
           <p className="text-sm text-gray-400"></p>
         </div>
@@ -49,11 +54,18 @@ export const CalendarDay = ({ day, events }: CalendarDayProps) => {
 
         const durationPercent = endPercent - startPercent;
 
+        const displayTime = `${format(eventStart, "h:mm a")} - ${format(
+          eventEnd,
+          "h:mm a"
+        )}`;
+
         return (
           <EventCard
             key={`${day}-event-${index}`}
             title={event.title}
             type={event.type}
+            time={displayTime}
+            description={event.description}
             top={`${startPercent}%`}
             height={`${durationPercent}%`}
           />
