@@ -95,7 +95,8 @@ const AddFoodFormContent = () => {
           <CardHeader>
             <CardTitle>Add Food</CardTitle>
             <CardDescription>
-              Time will be added automatically when food item is added.
+              Use notes to keep track of nutritional information or other
+              important details.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-y-2">
