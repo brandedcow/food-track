@@ -27,5 +27,5 @@ export const {
   ],
   // Must use JWT strat, Prisma ORM does not support Edge runtime. https://authjs.dev/guides/upgrade-to-v5#edge-compatibility
   session: { strategy: "jwt" },
-  secret: "M8YGjuFYzubtyV4v5uFaFEPlvgd7Ns2P8eEFozY/kms=",
+  secret: process.env.AUTH_SECRET,
 });
