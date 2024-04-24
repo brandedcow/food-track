@@ -11,7 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
+import { useCalendarEventsAPI } from "@/fetch-hooks/useCalendarEventsAPI";
 import { cn } from "@/lib/utils";
 import { CalendarEventType } from "@prisma/client";
 import Link from "next/link";

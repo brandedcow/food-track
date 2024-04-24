@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { endOfDay, startOfDay, subDays } from "date-fns";
 import useSelectedDateRange from "@/store/useSelectedDateRange";
 import useCalendarEvents from "@/store/useCalendarEvents";
-import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
+import { useCalendarEventsAPI } from "@/fetch-hooks/useCalendarEventsAPI";
 
 export const CALENDAR_TIME_LABEL_OFFSET = 60;
 

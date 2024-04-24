@@ -20,7 +20,7 @@ import { redirect, useSearchParams } from "next/navigation";
 import { CalendarEventType } from "@prisma/client";
 import { DateTimePicker } from "../shared/date-time-picker/container";
 import { Textarea } from "../ui/textarea";
-import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
+import { useCalendarEventsAPI } from "@/fetch-hooks/useCalendarEventsAPI";
 import useCalendarEvents from "@/store/useCalendarEvents";
 import { editEvent } from "@/actions/editEvent";
 

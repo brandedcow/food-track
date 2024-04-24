@@ -22,7 +22,7 @@ import { addMinutes } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { DateTimePicker } from "../shared/date-time-picker/container";
 import { Textarea } from "../ui/textarea";
-import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
+import { useCalendarEventsAPI } from "@/fetch-hooks/useCalendarEventsAPI";
 
 const formSchema = z.object({
   title: z.string().min(1),

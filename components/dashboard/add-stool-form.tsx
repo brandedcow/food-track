@@ -21,7 +21,7 @@ import { add } from "date-fns";
 import { CalendarEventType } from "@prisma/client";
 import { Textarea } from "../ui/textarea";
 import { DateTimePicker } from "../shared/date-time-picker/container";
-import { useCalendarEventsAPI } from "@/fetch-hooks/calendarEvent";
+import { useCalendarEventsAPI } from "@/fetch-hooks/useCalendarEventsAPI";
 
 const formSchema = z.object({
   description: z.string(),
