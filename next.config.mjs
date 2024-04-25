@@ -16,6 +16,12 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['chrisvkang.com'],
+      allowedForwardHosts: ['chrisvkang.com'],
+    }
+  }
 };
 
 export default nextConfig;
