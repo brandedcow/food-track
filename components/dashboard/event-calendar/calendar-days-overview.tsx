@@ -5,12 +5,11 @@ import {
   eachHourOfInterval,
   endOfDay,
   format,
-  isSameDay,
   startOfDay,
 } from "date-fns";
 import { CalendarDay } from "./calendar-day";
-import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
 import { CalendarEvent } from "@prisma/client";
+import { v4 } from "uuid";
 
 interface CalendarDaysOverviewProps {
   start: Date;
@@ -24,10 +23,10 @@ export const CalendarDaysOverview = ({
   events,
 }: CalendarDaysOverviewProps) => {
   return (
-    <div className="flex flex-col overflow-y-scroll">
-      <div className="flex ">
+    <div className="w-full h-full overflow-scroll">
+      <div className="flex">
         <TimeLabel />
-        <div className="flex w-full">
+        <div className="flex flex-1">
           {eachDayOfInterval({ start, end }).map((date, index) => {
             return (
               <CalendarDay
@@ -50,16 +49,12 @@ const TimeLabel = () => {
   });
 
   return (
-    <div
-      className="flex flex-col"
-      style={{ width: CALENDAR_TIME_LABEL_OFFSET }}
-    >
+    <div className="basis-12">
       {hours.map((hour, index) => (
-        <div
-          key={`time-label-${index}`}
-          className="h-10 pr-2 flex items-start justify-end border-gray-200 border-t"
-        >
-          <p className="text-sm text-gray-400">{format(hour, "h aa")}</p>
+        <div key={v4()} className="h-10 pr-1 border-gray-200 border-t">
+          <p className="text-end text-[.65rem] text-gray-400">
+            {format(hour, "h aa")}
+          </p>
         </div>
       ))}
     </div>

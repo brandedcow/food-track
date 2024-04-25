@@ -6,10 +6,11 @@ import { EditNoteForm } from "@/components/dashboard/edit-note-form";
 import { EditStoolForm } from "@/components/dashboard/edit-stool-form";
 import { EventCalendarContainer } from "@/components/dashboard/event-calendar/container";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
+import { cn } from "@/lib/utils";
 
 export default function DashboardPage() {
   return (
-    <div className="flex overflow-hidden">
+    <div className={cn("w-full flex flex-col-reverse", "laptop:flex-row")}>
       <DashboardSidebar />
       <EventCalendarContainer />
 

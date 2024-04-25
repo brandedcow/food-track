@@ -7,8 +7,7 @@ import { endOfDay, startOfDay, subDays } from "date-fns";
 import useSelectedDateRange from "@/store/useSelectedDateRange";
 import useCalendarEvents from "@/store/useCalendarEvents";
 import { useCalendarEventsAPI } from "@/fetch-hooks/useCalendarEventsAPI";
-
-export const CALENDAR_TIME_LABEL_OFFSET = 60;
+import { cn } from "@/lib/utils";
 
 interface EventCalendarProps {}
 
@@ -30,7 +29,12 @@ export const EventCalendarContainer = ({}: EventCalendarProps) => {
   }, [selectedDateRange, start, end, fetchCalendarEvents]);
 
   return (
-    <div className="flex flex-col w-full">
+    <div
+      className={cn(
+        "w-full h-full pl-2 pr-[1px] flex flex-col overflow-hidden",
+        "laptop:pl-0"
+      )}
+    >
       <CalendarHeader start={start} end={end} />
       <CalendarDaysOverview start={start} end={end} events={calendarEvents} />
     </div>

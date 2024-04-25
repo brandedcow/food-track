@@ -3,9 +3,9 @@
 import { getDayName } from "@/lib/date-utils";
 import { cn } from "@/lib/utils";
 import { eachDayOfInterval, getDate, getDay, isSameDay } from "date-fns";
+import { v4 } from "uuid";
 
 import { Open_Sans } from "next/font/google";
-import { CALENDAR_TIME_LABEL_OFFSET } from "./container";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -16,29 +16,27 @@ interface CalendarHeaderProps {
 
 export const CalendarHeader = ({ start, end }: CalendarHeaderProps) => {
   return (
-    <div
-      className="flex flex-grow-0 justify-around pt-6 pb-2"
-      style={{ marginLeft: CALENDAR_TIME_LABEL_OFFSET }}
-    >
+    <div className="w-full flex py-1">
+      <div className="basis-12"></div>
       {eachDayOfInterval({ start, end }).map((date, index) => {
         const isToday = isSameDay(new Date(), date);
         return (
           <div
-            key={`calendar-week-header-day-${index}`}
+            key={v4()}
             className={cn(
-              "flex flex-row gap-x-2 items-center justify-around px-2 rounded-sm",
-              isToday && "bg-blue-500 text-white"
+              "flex flex-1 justify-center flex-wrap py-[2px]",
+              isToday && "bg-blue-500 rounded text-white"
             )}
           >
             <p
               className={cn(
-                "uppercase font-medium text-gray-500",
+                "w-full text-center uppercase text-[.6rem] font-medium leading-3 text-gray-400",
                 isToday && "text-white"
               )}
             >
               {getDayName(getDay(date), { asAbbreviation: true })}
             </p>
-            <h2 className={cn("font-semibold", openSans.className)}>
+            <h2 className={cn("font-semibold leading-4", openSans.className)}>
               {getDate(date)}
             </h2>
           </div>

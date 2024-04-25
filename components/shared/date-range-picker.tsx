@@ -5,9 +5,11 @@ import { Calendar } from "../ui/calendar";
 import { format, subDays } from "date-fns";
 import useSelectedDateRange from "@/store/useSelectedDateRange";
 
-type DateRangePickerProps = {};
+type DateRangePickerProps = {
+  mode?: "calendar" | "button";
+};
 
-export function DateRangePicker({}: DateRangePickerProps) {
+export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
   const { selectedDateRange, setSelectedDateRange } = useSelectedDateRange();
 
   const start = selectedDateRange.from ?? subDays(new Date(), 7);
@@ -19,11 +21,24 @@ export function DateRangePicker({}: DateRangePickerProps) {
   )}`;
 
   return (
-    <Popover>
-      <PopoverTrigger>
-        <Button variant="outline">{dateRangeString}</Button>
-      </PopoverTrigger>
-      <PopoverContent className="bg-background rounded-md border-secondary border z-10">
+    <>
+      {mode === "button" ? (
+        <Popover>
+          <PopoverTrigger>
+            <Button variant="outline">{dateRangeString}</Button>
+          </PopoverTrigger>
+          <PopoverContent className="bg-background rounded-md border-secondary border z-10">
+            <Calendar
+              mode="range"
+              defaultMonth={new Date()}
+              selected={selectedDateRange}
+              onSelect={setSelectedDateRange}
+              min={2}
+              max={7}
+            />
+          </PopoverContent>
+        </Popover>
+      ) : (
         <Calendar
           mode="range"
           defaultMonth={new Date()}
@@ -32,7 +47,7 @@ export function DateRangePicker({}: DateRangePickerProps) {
           min={2}
           max={7}
         />
-      </PopoverContent>
-    </Popover>
+      )}
+    </>
   );
 }
