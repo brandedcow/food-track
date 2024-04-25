@@ -1,29 +1,43 @@
 "use client";
 
 import React from "react";
-import { Calendar } from "../ui/calendar";
-import { AddFoodButton } from "./add-food-button";
-import { AddStoolButton } from "./add-stool-button";
-import { AddNoteButton } from "./add-note-button";
-import useSelectedDateRange from "@/store/useSelectedDateRange";
+import { cn } from "@/lib/utils";
+import { AddEventButton } from "./add-event-button";
+import { DateRangePicker } from "../shared/date-range-picker";
+import { PiBowlFood, PiNoteDuotone, PiToiletPaper } from "react-icons/pi";
+import { useMediaQuery } from "usehooks-ts";
 
 export const DashboardSidebar = () => {
-  const { selectedDateRange, setSelectedDateRange } = useSelectedDateRange();
+  const isLaptop = useMediaQuery("(min-width: 1024px)");
 
   return (
-    <div className="flex flex-grow-0 h-full flex-col p-6 gap-y-4">
-      <Calendar
-        mode="range"
-        defaultMonth={new Date()}
-        selected={selectedDateRange}
-        onSelect={setSelectedDateRange}
-        className="rounded-md border"
-        min={2}
-        max={7}
+    <div
+      className={cn(
+        "flex items-center justify-between px-4 py-2 gap-x-2",
+        "laptop:flex-col laptop:justify-start laptop:gap-y-4"
+      )}
+    >
+      {isLaptop && <DateRangePicker mode="calendar" />}
+      <AddEventButton
+        label="Add Food"
+        icon={<PiBowlFood />}
+        href={{ pathname: "dashboard", query: { modal: "add-food" } }}
+        size="responsive-sm-lg"
       />
-      <AddFoodButton />
-      <AddStoolButton />
-      <AddNoteButton />
+      <AddEventButton
+        label="Add Stool"
+        icon={<PiToiletPaper />}
+        href={{ pathname: "dashboard", query: { modal: "add-stool" } }}
+        size="responsive-sm-lg"
+        variant="secondary"
+      />
+      <AddEventButton
+        label="Add Note"
+        icon={<PiNoteDuotone />}
+        href={{ pathname: "dashboard", query: { modal: "add-note" } }}
+        size="responsive-sm-lg"
+        variant="outline"
+      />
     </div>
   );
 };
