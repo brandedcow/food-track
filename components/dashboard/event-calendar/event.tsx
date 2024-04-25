@@ -96,7 +96,7 @@ export function EventCard({
               onClick={() => setIsSelected(true)}
               onBlur={() => setIsSelected(false)}
             >
-              <p className="text-gray-100 truncate">{title}</p>
+              <p className="text-gray-100 truncate select-none">{title}</p>
             </Button>
           </PopoverTrigger>
         </ContextMenuTrigger>
