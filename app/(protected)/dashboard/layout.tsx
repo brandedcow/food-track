@@ -5,9 +5,9 @@ import { PropsWithChildren } from "react";
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <SessionProvider>
-      <div className="flex flex-col h-screen">
+      <div className="w-svw h-svh flex flex-col overflow-hidden">
         <Header />
-        {children}
+        <div className="flex h-full overflow-hidden">{children}</div>
       </div>
     </SessionProvider>
   );
