@@ -17,7 +17,9 @@ interface CalendarHeaderProps {
 export const CalendarHeader = ({ start, end }: CalendarHeaderProps) => {
   return (
     <div className="w-full flex py-1">
-      <div className="basis-12"></div>
+      <div className="basis-12">
+        {/* TODO: Add Time Range Display Selector */}
+      </div>
       {eachDayOfInterval({ start, end }).map((date, index) => {
         const isToday = isSameDay(new Date(), date);
         return (
