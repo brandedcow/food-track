@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { AddEventButton } from "./add-event-button";
 import { DateRangePicker } from "../shared/date-range-picker";
 import { PiBowlFood, PiNoteDuotone, PiToiletPaper } from "react-icons/pi";
-import { useMediaQuery } from "usehooks-ts";
+import useMediaQuery from "@/fetch-hooks/useMediaQuery";
 
 export const DashboardSidebar = () => {
   const isLaptop = useMediaQuery("(min-width: 1024px)");

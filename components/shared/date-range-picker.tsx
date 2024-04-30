@@ -11,9 +11,10 @@ type DateRangePickerProps = {
 
 export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
   const { selectedDateRange, setSelectedDateRange } = useSelectedDateRange();
+  const today = new Date();
 
-  const start = selectedDateRange.from ?? subDays(new Date(), 7);
-  const end = selectedDateRange.to ?? new Date();
+  const start = selectedDateRange.from ?? subDays(today, 7);
+  const end = selectedDateRange.to ?? today;
 
   const dateRangeString = `${format(new Date(start), "M/d/yy")} - ${format(
     new Date(end),
@@ -24,13 +25,13 @@ export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
     <>
       {mode === "button" ? (
         <Popover>
-          <PopoverTrigger>
+          <PopoverTrigger asChild>
             <Button variant="outline">{dateRangeString}</Button>
           </PopoverTrigger>
           <PopoverContent className="bg-background rounded-md border-secondary border z-10">
             <Calendar
               mode="range"
-              defaultMonth={new Date()}
+              defaultMonth={today}
               selected={selectedDateRange}
               onSelect={setSelectedDateRange}
               min={2}
@@ -41,7 +42,7 @@ export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
       ) : (
         <Calendar
           mode="range"
-          defaultMonth={new Date()}
+          defaultMonth={today}
           selected={selectedDateRange}
           onSelect={setSelectedDateRange}
           min={2}
