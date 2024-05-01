@@ -1,20 +1,23 @@
-"use client";
-
-import { signIn } from "next-auth/react";
-import { Button } from "../ui/button";
 import { BuiltInProviderType } from "next-auth/providers";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 
 interface SocialButtonProps {
   provider: BuiltInProviderType;
+  onClick: (provider: BuiltInProviderType) => void;
+  disabled?: boolean;
+  loading?: boolean;
 }
 
-export const SocialButton = ({ provider }: SocialButtonProps) => {
-  const handleClick = () => {
-    signIn(provider);
-  };
-
+export const SocialButton = ({
+  provider,
+  onClick,
+  disabled,
+  loading,
+}: SocialButtonProps) => {
   return (
-    <Button size="lg" onClick={handleClick}>
+    <Button size="lg" onClick={() => onClick(provider)} disabled={disabled}>
+      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
       {provider}
     </Button>
   );
