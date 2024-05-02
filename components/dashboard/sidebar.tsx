@@ -17,7 +17,10 @@ export const DashboardSidebar = () => {
         "laptop:flex-col laptop:justify-start laptop:gap-y-4"
       )}
     >
-      {isLaptop && <DateRangePicker mode="calendar" />}
+      <DateRangePicker
+        mode="calendar"
+        className={cn("hidden", "laptop:block")}
+      />
       <AddEventButton
         label="Add Food"
         icon={<PiBowlFood />}
@@ -41,3 +44,5 @@ export const DashboardSidebar = () => {
     </div>
   );
 };
+
+export default DashboardSidebar;

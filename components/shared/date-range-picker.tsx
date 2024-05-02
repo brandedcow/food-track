@@ -7,9 +7,13 @@ import useSelectedDateRange from "@/store/useSelectedDateRange";
 
 type DateRangePickerProps = {
   mode?: "calendar" | "button";
+  className?: string;
 };
 
-export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
+export function DateRangePicker({
+  mode = "button",
+  className,
+}: DateRangePickerProps) {
   const { selectedDateRange, setSelectedDateRange } = useSelectedDateRange();
   const today = new Date();
 
@@ -25,7 +29,7 @@ export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
     <>
       {mode === "button" ? (
         <Popover>
-          <PopoverTrigger asChild>
+          <PopoverTrigger asChild className={className}>
             <Button variant="outline">{dateRangeString}</Button>
           </PopoverTrigger>
           <PopoverContent className="bg-background rounded-md border-secondary border z-10">
@@ -41,6 +45,7 @@ export function DateRangePicker({ mode = "button" }: DateRangePickerProps) {
         </Popover>
       ) : (
         <Calendar
+          className={className}
           mode="range"
           defaultMonth={today}
           selected={selectedDateRange}
